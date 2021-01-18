@@ -7,6 +7,8 @@ from datetime import datetime, timedelta
 from bson import ObjectId
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
 auth = Blueprint('auth', __name__)
 
 @auth.route('/api/v1/auth/signup', methods=['POST'])
@@ -39,5 +41,15 @@ def login():
         return {'error': 'Email or password invalid'}, 401
 
     expires = timedelta(days=7)
-    access_token = create_access_token(identity=user_details["password"], expires_delta=expires)
+    access_token = create_access_token(identity=user_details["_id"], expires_delta=expires)
     return {'token': access_token}, 200
+
+@auth.route('/api/v1/auth/user', methods=['GET'])
+@jwt_required
+def get_user():
+    if request.method == 'GET':
+        """
+        Get User
+        """
+        user = mongo.db.users.find_one_or_404({"_id":get_jwt_identity()})
+        return user

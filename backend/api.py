@@ -24,3 +24,7 @@ jwt = JWTManager(app)
 app.register_blueprint(subjects)
 app.register_blueprint(tasks)
 app.register_blueprint(auth)
+
+@app.route('/api/v1', methods=['GET'])
+def hello_world():
+    return "hello world"

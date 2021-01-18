@@ -1,20 +1,43 @@
+import React from 'react';
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import {Box, AppBar, Toolbar, Button} from '@material-ui/core';
+import SignIn from "./components/signin.component";
+import SignUp from "./components/signup.component";
+import Copyright from "./components/copyright.component";
+import Home from "./components/home.component";
 
-function App() {
-  const [ currentTime, setCurrentTime] = useState(0);
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-  useEffect(() => {
-    fetch('/time'). then(res => res.json()).then(data => {
-      
-      setTimeout(()=>{setCurrentTime(data.time);}, 5000);
-    });
-  })
-  return (
-    <div className="App">
-      <p>The current time is {currentTime}</p>
-    </div>
-  );
+export default class App extends React.Component {
+   
+    render() {
+        return (
+            <Router>
+              <Box>
+                <AppBar position="static">
+                  <Toolbar>
+                        <Button color="inherit" href="/">Home</Button>
+                        <Button color="inherit" href="/login">Login</Button>
+                        <Button color="inherit" href="/signup">Signup</Button>
+                  </Toolbar>
+                </AppBar>
+        
+                <Switch>
+                    <Route exact path="/" component = {Home}/>
+                    <Route path="/login" component = {SignIn}/>
+                    <Route path="/signup" component = {SignUp}/>
+                </Switch>
+                <Box mt={8}>
+                    <Copyright/>
+                </Box>
+              </Box>
+            </Router>
+          );
+    }
+    
 }
-
-export default App;
