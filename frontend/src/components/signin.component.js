@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import axios from "axios"
-import { Redirect } from 'react-router-dom';
 
 
 export default class SignIn extends React.Component {
@@ -14,6 +13,7 @@ export default class SignIn extends React.Component {
             isError: false
         }
     }   
+
     onSubmitClick = (e)=>{
         e.preventDefault()
         console.log("You pressed login")
@@ -38,14 +38,36 @@ export default class SignIn extends React.Component {
     }
     render() {
         if (this.state.isLoggedIn){
-            return <Redirect to='/'/>;
+            // return <Redirect to={{pathname:'/',
+            //                     state:{isloggedin: true}}}/>;
+            return (<Container component="main" maxWidth="xs">
+                    <Box mt={8}>
+                        <Typography component="h1" variant="h5">
+                            Successful Login
+                        </Typography>
+                        </Box>
+                        <Box mt={8}>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={this.props.handler}
+                                href="/"
+                            >
+                                Return to Main Page
+                            </Button>
+                        </Box>
+                    </Container>)
         } else {
             return (
                 <Container component="main" maxWidth="xs">
                     <div>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
+                    <Box mt={8}>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                    </Box>
                     <form noValidate>
                         <TextField
                             variant="outlined"

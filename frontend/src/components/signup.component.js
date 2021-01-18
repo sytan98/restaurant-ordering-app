@@ -1,12 +1,8 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import axios from "axios"
 import { Redirect } from "react-router-dom";
+import {Button, Box, Grid, Typography, Container} from '@material-ui/core';
 
 export default class SignUp extends React.Component {
     constructor(props) {
@@ -41,9 +37,11 @@ export default class SignUp extends React.Component {
             return (
                 <Container component="main" maxWidth="xs">
                     <div>
-                    <Typography component="h1" variant="h5">
-                        Create an Account
-                    </Typography>
+                    <Box mt={8}>
+                        <Typography component="h1" variant="h5">
+                            Create an Account
+                        </Typography>
+                    </Box>
                     <form noValidate>
                         <Grid container>
                             <Grid item xs>
