@@ -9,6 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import PostSubject from './postsubject.component';
+import SubjectRow from './subjectrow.component';
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -25,7 +27,7 @@ const rows = [
 export default class Subject extends React.Component {
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {subjects:[]};
     }
 
     componentDidMount(){
@@ -38,6 +40,7 @@ export default class Subject extends React.Component {
         axios.get('/api/v1/subjects', config)
             .then(res => {
                 console.log(res.data);
+                this.setState({subjects: res.data});
             })
             .catch(err => {
                 console.log(err);
@@ -48,31 +51,26 @@ export default class Subject extends React.Component {
         return(
             <Container>
                 <Box mt={8}>
-
+                    <PostSubject/>
                 </Box>
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        <TableCell>Title</TableCell>
+                        <TableCell align="right">Module Code</TableCell>
+                        <TableCell align="right">Difficulty</TableCell>
+                        <TableCell align="right">Last Modified</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                        <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">
-                            {row.name}
-                            </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
-                        </TableRow>
-                        ))}
+                        {this.state.subjects.map((subject) => 
+                            <SubjectRow 
+                                name={subject.name} 
+                                difficulty={subject.difficulty} 
+                                last_modified={subject.last_modified} 
+                                modulecode={subject.modulecode}/>
+                        )}
                     </TableBody>
                     </Table>
                 </TableContainer>

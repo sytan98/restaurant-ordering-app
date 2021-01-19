@@ -6,6 +6,7 @@ from database import mongo
 from datetime import datetime
 from bson import ObjectId
 from flask_jwt_extended import jwt_required, get_jwt_identity
+import json
 
 subjects = Blueprint('subjects', __name__)
 
@@ -32,12 +33,12 @@ def get_subjects():
     Get all subjects
     """
     subjects = mongo.db.subjects.find({"user":get_jwt_identity()})
-    collection_of_subjects = {str(subject["_id"]): {"name": subject["name"],
-                                                    "modulecode": subject["modulecode"],
-                                                    "difficulty": subject["difficulty"],
-                                                    "last_modified": subject["last_modified"] } 
-                                                    for subject in subjects}
-    return jsonify(collection_of_subjects)
+    collection_of_subjects = [{"name": subject["name"],
+                                "modulecode": subject["modulecode"],
+                                "difficulty": subject["difficulty"],
+                                "last_modified": subject["last_modified"] } 
+                                for subject in subjects]
+    return json.dumps(collection_of_subjects)
  
 @subjects.route('/api/v1/subject/<string:modulecode>', methods=['GET','PUT','DELETE'])
 @jwt_required

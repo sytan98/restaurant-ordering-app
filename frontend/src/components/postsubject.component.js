@@ -2,12 +2,13 @@ import React from 'react';
 import axios from "axios"
 import { Redirect } from "react-router-dom";
 import {Button, Box, Grid, Typography, Container, TextField} from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
 
-export default function PostTask() {
+export default function PostSubject() {
     return (
         <Container>
             <Typography component="h1" variant="h5">
-                Add a new task
+                Add a new subject
             </Typography>
             <form noValidate>
                 <Grid container spacing={3}>
@@ -17,9 +18,9 @@ export default function PostTask() {
                             margin="normal"
                             fullWidth
                             required
-                            id="subject_modulecode"
-                            label="Subject Modulecode"
-                            name="subject_modulecode"
+                            id="modulecode"
+                            label="Modulecode"
+                            name="modulecode"
                             autoFocus
                             onChange={e => this.last_name = e.target.value}
                         />
@@ -30,9 +31,9 @@ export default function PostTask() {
                             margin="normal"
                             required
                             fullWidth
-                            id="title"
-                            label="Title"
-                            name="title"
+                            id="name"
+                            label="Name"
+                            name="name"
                             autoFocus
                             onChange={e => this.first_name = e.target.value}
                         />
@@ -41,29 +42,17 @@ export default function PostTask() {
                 <Grid container spacing={3} alignItems="center">
                 
                     <Grid item xs={6}>
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Description"
-                            multiline
-                            fullWidth
-                            autoFocus
-                            margin="normal"
-
-                            rowsMax={4}
-                            // onChange={e => this.last_name = e.target.value}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            id="datetime-local"
-                            label="Planned Time"
-                            type="datetime-local"
-                            defaultValue="2017-05-24T10:30"
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            onChange={e => this.last_name = e.target.value}
+                        <Typography id="discrete-slider" gutterBottom>
+                            Difficulty
+                        </Typography>
+                        <Slider
+                            defaultValue={30}
+                            aria-labelledby="discrete-slider"
+                            valueLabelDisplay="auto"
+                            step={1}
+                            marks
+                            min={0}
+                            max={5}
                         />
                     </Grid>
                     <Grid item xs ={3}>
@@ -74,7 +63,7 @@ export default function PostTask() {
                             color="primary"
                             // onClick={this.onSubmitClick}
                         >
-                            Add Task
+                            Add Subject
                         </Button>
                     </Grid>            
                 </Grid>

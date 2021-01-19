@@ -6,6 +6,8 @@ from database import mongo
 from datetime import datetime
 from bson import ObjectId
 from flask_jwt_extended import jwt_required, get_jwt_identity
+import json
+
 
 tasks = Blueprint('tasks', __name__)
 
@@ -39,14 +41,14 @@ def get_tasks():
     Get all tasks
     """
     tasks = mongo.db.tasks.find({"user":get_jwt_identity()})
-    collection_of_tasks = {str(task["_id"]): {"title": task["title"], 
-                                        "description": task["description"],
-                                        "subject_modulecode": task["subject_modulecode"],
-                                        "created": task["created"],
-                                        "completed": task["completed"],
-                                        "planned_time": task["planned_time"] } 
-                                        for task in tasks}
-    return jsonify(collection_of_tasks)
+    collection_of_tasks = [{"title": task["title"], 
+                            "description": task["description"],
+                            "subject_modulecode": task["subject_modulecode"],
+                            "created": task["created"],
+                            "completed": task["completed"],
+                            "planned_time": task["planned_time"] } 
+                            for task in tasks]
+    return json.dumps(collection_of_tasks)
  
 @tasks.route('/api/v1/task/id/<string:id>', methods=['GET', 'PUT', 'DELETE'])
 @jwt_required

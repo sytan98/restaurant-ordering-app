@@ -35,7 +35,7 @@ export default class Home extends React.Component {
         
         if (this.state.isloggedin){
             return(
-                <Container maxWidth = "sm">
+                <Container maxWidth = "lg">
                     
                     <Box mt={8}>
                         <Typography varuant="h2"> Welcome {this.state.first_name} {this.state.last_name}! </Typography>   
